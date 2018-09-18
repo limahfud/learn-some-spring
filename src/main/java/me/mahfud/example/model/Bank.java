@@ -29,10 +29,12 @@ public class Bank {
         this.bank = bank;
     }
 
+    @JsonProperty("id")
     public int getId() {
         return id;
     }
 
+    @JsonProperty("id")
     public void setId(int id) {
         this.id = id;
     }
@@ -42,6 +44,7 @@ public class Bank {
         return bank;
     }
 
+    @JsonProperty("bank_name")
     public void setBank(String bank) {
         this.bank = bank;
     }
