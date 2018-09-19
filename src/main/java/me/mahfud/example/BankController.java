@@ -70,7 +70,7 @@ public class BankController {
 
         HashMap<String, Boolean> response = new HashMap<>();
         response.put("success", bankQuery.isPresent());
-        
+
         return response;
     }
 }
