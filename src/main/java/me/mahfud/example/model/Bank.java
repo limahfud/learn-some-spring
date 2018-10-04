@@ -1,16 +1,20 @@
 package me.mahfud.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
 @Entity
 public class Bank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Size(min = 3, max = 100)
     private String bank;
@@ -25,6 +29,10 @@ public class Bank {
     @Column(name = "logo")
     private String logo;
 
+    @OneToMany
+    @JoinColumn(name = "bank_id", referencedColumnName = "id")
+    private List<BankUser> bankUserList;
+
     public Bank() {}
 
     public Bank(String bank) {
@@ -38,7 +46,7 @@ public class Bank {
     }
 
     @JsonProperty("id")
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -53,15 +61,6 @@ public class Bank {
 
     public void setBank(String bank) {
         this.bank = bank;
-    }
-
-    @Override
-    public String toString() {
-        return "Bank{" +
-                "id=" + id +
-                ", bank='" + bank + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 
     public String getName() {
@@ -80,12 +79,28 @@ public class Bank {
         return number;
     }
 
-
     public String getLogo() {
         return logo;
     }
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "id=" + id +
+                ", bank='" + bank + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public List<BankUser> getBankUserList() {
+        return bankUserList;
+    }
+
+    public void setBankUserList(List bankUserList) {
+        this.bankUserList = bankUserList;
     }
 }
