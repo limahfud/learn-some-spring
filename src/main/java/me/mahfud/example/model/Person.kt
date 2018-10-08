@@ -1,3 +1,3 @@
-package me.mahfud.example
+package me.mahfud.example.model
 
 data class Person(val name: String , val age: Int)
