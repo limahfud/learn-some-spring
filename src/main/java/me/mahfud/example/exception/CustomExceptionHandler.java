@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
@@ -48,12 +52,20 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> noSuchMessageExcseption(NoSuchMessageException ex) {
+    public ResponseEntity<ApiError> generalException(NoSuchMessageException ex) {
         ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error", "There's something wrong");
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiError> constraintViolationException(ConstraintViolationException ex) {
+        List<String> errors = new ArrayList<>();
+        ex.getConstraintViolations().forEach(constraintViolation -> errors.add(constraintViolation.getMessage()));
 
+        ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "User Error", errors);
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
 }

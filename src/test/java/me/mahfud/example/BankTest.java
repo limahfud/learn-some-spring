@@ -52,7 +52,7 @@ public class BankTest extends TestCase {
         bankRequestVo.setName("Paijo");
         bankRequestVo.setNumber("12324124123123");
         bankRequestVo.setLogo("main.html");
-        bankRequestVo.setBank("Bank Italy");
+        bankRequestVo.setBank("ay");
 
         bankVo = bankService.createBank(bankRequestVo);
 
