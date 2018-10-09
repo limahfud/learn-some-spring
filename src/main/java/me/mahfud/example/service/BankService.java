@@ -9,6 +9,7 @@ import me.mahfud.example.request.BankRequestVo;
 import me.mahfud.example.response.converter.BankDetailMapper;
 import me.mahfud.example.response.mapper.BankUserToUserMapper;
 import me.mahfud.example.response.vo.*;
+import me.mahfud.example.validator.BankValidator;
 import net.bytebuddy.asm.Advice;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -18,6 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import javax.xml.soap.Detail;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
@@ -34,7 +38,13 @@ public class BankService {
     BankUserRepository bankUserRepository;
 
     @Autowired
+    BankValidator bankValidator;
+
+    @Autowired
     BankUserToUserMapper mapper;
+
+    @Autowired
+    Validator validator;
 
     public UserDetail getBankUser(Long id) {
         BankUser bankUser = bankUserRepository.findById(id).get();
@@ -74,8 +84,15 @@ public class BankService {
         }
     }
 
-    public DetailBankVo createBank(BankRequestVo bankRequestVo) {
+    public DetailBankVo createBank(@Valid BankRequestVo bankRequestVo) {
         Bank newBank = new Bank();
+
+//        if (validator.validate(bankRequestVo).size() > 0) {
+//            throw new ConstraintViolationException(validator.validate(bankRequestVo));
+//        }
+
+        bankValidator.validate(bankRequestVo);
+
         newBank.setName(bankRequestVo.getName());
         newBank.setBank(bankRequestVo.getBank());
         newBank.setLogo(bankRequestVo.getLogo());
