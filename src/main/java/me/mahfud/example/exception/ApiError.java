@@ -35,4 +35,13 @@ public class ApiError {
     public List<String> getErrors() {
         return errors;
     }
+
+    @Override
+    public String toString() {
+        return "ApiError{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                ", errors=" + errors +
+                '}';
+    }
 }
