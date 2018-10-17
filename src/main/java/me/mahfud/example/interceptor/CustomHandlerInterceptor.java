@@ -16,13 +16,13 @@ public class CustomHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("Interceptor : pre handler");
 
-        if (request.getHeader("Authorization") == null) {
-            response.setStatus(403);
-
-            ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Server Error", "You just cant access this resource");
-            response.getWriter().append(apiError.toString());
-            return false;
-        }
+//        if (request.getHeader("Authorization") == null) {
+//            response.setStatus(403);
+//
+//            ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Server Error", "You just cant access this resource");
+//            response.getWriter().append(apiError.toString());
+//            return false;
+//        }
 
         return true;
     }
