@@ -26,9 +26,14 @@ public class BankController {
     @Autowired
     BankRepository bankRepository;
 
+    @GetMapping("/hi")
+    public ResponseEntity<String> helloWorld() {
+        return new ResponseEntity<>("Hello World", HttpStatus.OK);
+    }
+
 
     @GetMapping("/bank")
-    public ResponseEntity<Response>  index() {
+    public ResponseEntity<Response>  index(@RequestHeader("Authorization") String authorizationHeader) {
         List<BankItem> items = bankService.bankItemList();
 
         Response response = new Response(HttpStatus.OK, items);

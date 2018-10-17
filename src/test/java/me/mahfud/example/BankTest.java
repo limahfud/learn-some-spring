@@ -8,8 +8,8 @@ import me.mahfud.example.request.BankRequestVo;
 import me.mahfud.example.response.vo.BankItem;
 import me.mahfud.example.response.vo.DetailBankVo;
 import me.mahfud.example.service.BankService;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -116,4 +116,8 @@ public class BankTest extends TestCase {
         Assertions.assertThat(bankService.bankItemList().size()).isEqualTo(count);
     }
 
+    @Test
+    public void test99_addNewAsTest() {
+        Assertions.assertThat(2+2).as("Two plus two").isEqualTo(5);
+    }
 }

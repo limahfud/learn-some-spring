@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.persistence.EntityManager;
@@ -77,6 +78,13 @@ public class BankUserController {
 
     @GetMapping("/error")
     public ResponseEntity<ResponseError> getApiError() {
+        ResponseError response = new ResponseError(HttpStatus.NOT_FOUND,  "The page you are looking for is not found");
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/error")
+    public ResponseEntity<ResponseError> postApiError() {
         ResponseError response = new ResponseError(HttpStatus.NOT_FOUND,  "The page you are looking for is not found");
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);

@@ -6,25 +6,16 @@ import me.mahfud.example.model.BankUser;
 import me.mahfud.example.repositories.BankRepository;
 import me.mahfud.example.repositories.BankUserRepository;
 import me.mahfud.example.request.BankRequestVo;
-import me.mahfud.example.response.converter.BankDetailMapper;
 import me.mahfud.example.response.mapper.BankUserToUserMapper;
-import me.mahfud.example.response.vo.*;
+import me.mahfud.example.response.vo.BankItem;
+import me.mahfud.example.response.vo.DetailBankVo;
+import me.mahfud.example.response.vo.UserDetail;
 import me.mahfud.example.validator.BankValidator;
-import net.bytebuddy.asm.Advice;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.Validator;
-import javax.xml.soap.Detail;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
