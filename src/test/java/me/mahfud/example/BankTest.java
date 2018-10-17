@@ -2,27 +2,32 @@ package me.mahfud.example;
 
 
 import junit.framework.TestCase;
-import me.mahfud.example.exception.BusNotFoundException;
-import me.mahfud.example.model.Bank;
 import me.mahfud.example.request.BankRequestVo;
 import me.mahfud.example.response.vo.BankItem;
 import me.mahfud.example.response.vo.DetailBankVo;
 import me.mahfud.example.service.BankService;
-import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
+import org.assertj.core.data.Index;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.xml.soap.Detail;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BankTest extends TestCase {
 
@@ -33,6 +38,13 @@ public class BankTest extends TestCase {
 
     @Autowired
     BankService bankService;
+
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private TestRestTemplate testRestTemplate;
+
 
     @Test
     public void test01_whenYouFindAllUser_makeSureItReturnsList() {
@@ -52,7 +64,7 @@ public class BankTest extends TestCase {
         bankRequestVo.setName("Paijo");
         bankRequestVo.setNumber("12324124123123");
         bankRequestVo.setLogo("main.html");
-        bankRequestVo.setBank("ay");
+        bankRequestVo.setBank("Bank MadaApaya");
 
         bankVo = bankService.createBank(bankRequestVo);
 
@@ -104,12 +116,22 @@ public class BankTest extends TestCase {
         Assertions.assertThat(detailFromDatabase.getLogo()).isEqualTo(bankRequestVo.getLogo());
     }
 
+    @Test
+    public void test99_testShouldReturningHelloWorld() {
+        String url = "http://localhost:" + port + "/hi";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer dunuopd12j32d2");
+        this.testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+
+        Assertions.assertThat(this.testRestTemplate.getForObject(url, String.class)).contains("Hello World");
+    }
+
 
     @Test
     public void test100_removeAllBankWithPaijoName() {
         List<BankItem> banks = bankService.searchBankByName(bankRequestVo.getName());
 
-        for (BankItem bankItem: banks) {
+        for (BankItem bankItem : banks) {
             bankService.deleteBank(bankItem.getId());
         }
 
@@ -118,6 +140,8 @@ public class BankTest extends TestCase {
 
     @Test
     public void test99_addNewAsTest() {
-        Assertions.assertThat(2+2).as("Two plus two").isEqualTo(5);
+        Assertions.assertThat(2 + 2).as("Two plus two").isEqualTo(4);
+
+
     }
 }
