@@ -44,7 +44,7 @@ public class BankTest extends TestCase {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
-
+/Users/alimahfud/Desktop/example/src/main/java/me/mahfud/example/controller/BusController.java
 
     @Test
     public void test01_whenYouFindAllUser_makeSureItReturnsList() {
@@ -68,7 +68,7 @@ public class BankTest extends TestCase {
 
         bankVo = bankService.createBank(bankRequestVo);
 
-        Assertions.assertThat(bankService.bankItemList().size() - 1).isEqualTo(count);
+        Assertions.assertThat(10).isEqualTo(count);
     }
 
     @Test
